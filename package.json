@@ -1,12 +1,16 @@
 {
   "name": "hardbox-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "CLI controller for hardbox reverse proxy",
-  "main": "index.js",
+  "main": "hardbox",
   "dependencies": {
     "commander": "^2.11.0",
     "request": "^2.81.0"
   },
+  "bin": {
+    "hardbox": "./hardbox"
+  },
+  "preferGlobal": true,
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
