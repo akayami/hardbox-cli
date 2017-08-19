@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const path = require('path');
+const request = require('request');
+const fs = require('fs');
+const {
+	URL
+} = require('url');
+
+program
+	.version('0.0.1')
+	.option('-h --host <hostname>', 'Specify hostname or socket file')
+	//	.option('-p --port <port>', 'Specify Port')
+	.command('vhost', 'Managment of vhosts')
+	.command('reload')
+	.action(function() {
+		console.log('Reloading');
+		try {
+			if(!program.host) {
+				program.host = '/tmp/hardbox';
+			}
+			try {
+				url = new URL('/reload', program.host);
+				url = url.toString();
+			} catch(e) {
+				url = `http://unix:${program.host}:/reload`
+			}
+			request.get(url, function(error, response, body) {
+				if (error) {
+					console.error(error);
+				} else {
+					if (response.statusCode == 200) {
+						console.log(body);
+					} else {
+						console.error('Invalid response code: ' + response.statusCode);
+					}
+				}
+			});
+		} catch(e) {
+			throw e;
+		}
+	})
+program.parse(process.argv);
