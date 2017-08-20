@@ -1,0 +1,52 @@
+#!/usr/bin/env node
+
+const program = require('commander');
+const v = require('validator');
+try {
+	program
+		.version('0.0.1')
+
+	program.parse(process.argv);
+
+	var config =
+`
+// This is the main application config of hardbox. Should be placed in /etc/hardbox/config.js
+const config = {};
+
+// https://github.com/expressjs/morgan
+config.morgan = 'tiny'; // tiny/combined etc.
+
+// https://github.com/trentm/node-bunyan
+// Sets up app output library (stdout and such)
+config.bunyan = {
+	name: 'hardbox',
+	streams: [{
+		level: 'info',	//debug, info, error
+		stream: process.stdout
+	}, ]
+};
+
+
+// List of controller endpoint. By default only local is setup.
+config.controller = {
+	endpoint: [{
+		server: require('http'),
+		listen: {
+			path: '/run/hardbox.sock'
+		}
+	}],
+	vhost: {
+		path: '/etc/hardbox/conf.d/'
+	}
+};
+
+module.exports = config;
+
+`
+	process.stdout.write(config, null, 4);
+	process.exit(0);
+} catch (e) {
+	console.error(e);
+	console.error(e.message);
+	process.exit(1);
+}

@@ -10,21 +10,21 @@ const {
 
 program
 	.version('0.0.1')
-	.option('-h --host <hostname>', 'Specify hostname or socket file')
+	.option('-s, --server <hostname>', 'Specify hostname or socket file')
 	//	.option('-p --port <port>', 'Specify Port')
 	.command('vhost', 'Managment of vhosts')
+	.command('generate', 'Generates main config file')
 	.command('reload')
 	.action(function() {
-		console.log('Reloading');
 		try {
-			if(!program.host) {
-				program.host = '/tmp/hardbox';
+			if(!program.server) {
+				program.server = '/run/hardbox.sock';
 			}
 			try {
-				url = new URL('/reload', program.host);
+				url = new URL('/reload', program.server);
 				url = url.toString();
 			} catch(e) {
-				url = `http://unix:${program.host}:/reload`
+				url = `http://unix:${program.server}:/reload`
 			}
 			request.get(url, function(error, response, body) {
 				if (error) {
