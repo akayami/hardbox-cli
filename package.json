@@ -1,6 +1,6 @@
 {
   "name": "hardbox-cli",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "CLI controller for hardbox reverse proxy",
   "main": "hardbox",
   "dependencies": {
