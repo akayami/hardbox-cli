@@ -40,9 +40,13 @@ config.controller = {
 	}
 };
 
+config.node = {
+	global_path: '/usr/lib/node_modules'
+};
+
 module.exports = config;
 
-`
+`;
 	process.stdout.write(config, null, 4);
 	process.exit(0);
 } catch (e) {
