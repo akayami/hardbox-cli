@@ -21,9 +21,10 @@ program
 			if(!program.server) {
 				program.server = '/run/hardbox.sock';
 			}
+			let url;
 			try {
-				url = new URL('/reload', program.server);
-				url = url.toString();
+				const oURL = new URL('/reload', program.server);
+				url = oURL.toString();
 			} catch(e) {
 				url = `http://unix:${program.server}:/reload`
 			}
@@ -31,7 +32,7 @@ program
 				if (error) {
 					console.error(error);
 				} else {
-					if (response.statusCode == 200) {
+					if (response.statusCode === 200) {
 						console.log(body);
 					} else {
 						console.error('Invalid response code: ' + response.statusCode);
