@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/akayami/hardbox-cli.svg?branch=master)](https://travis-ci.org/akayami/hardbox-cli)[![Coverage Status](https://coveralls.io/repos/github/akayami/hardbox-cli/badge.svg?branch=master)](https://coveralls.io/github/akayami/hardbox-cli?branch=master)
 # Hardbox CLI
 
 ## Installation
