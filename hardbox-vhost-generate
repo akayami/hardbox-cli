@@ -1,56 +1,6 @@
 #!/usr/bin/env node
-
-const program = require('commander');
-const v = require('validator');
 try {
-	program
-		.version('0.0.1')
-		.option('-n --name [name]', 'Specify name of this vhost')
-		.option('-p --port [port]', 'Specify port')
-		.option('-r --protocol [protocol]', 'Specify protocol (http or https)')
-		.option('-t --target [target]', 'Specify the target endpoint')
-		.option('-d --domainName [domain]', 'Specify the domain name')
-
-	program.parse(process.argv);
-
-	// Long work around a bug in commander regarding usage of name
-
-	let name = (program.name && typeof program.name == 'string' ? program.name : false) || 'name';
-	let protocol = program.protocol || 'http';
-	if (protocol != 'http' && protocol != 'https') {
-		throw new Error('Invalid protocol requested. Only http and https are supported');
-	}
-	let port = program.port || '80';
-
-	if (!v.isInt(port, {
-			min: 1,
-			max: 65535
-		})) {
-		throw new Error('Port is out of bounds [1-65535] or is not a number');
-	}
-
-	let domain = program.domainName || 'domain.local';
-
-	let target = program.target || 'http://localhost:8080';
-
-
-	var config =
-`
-module.exports = {
-	name: '${name}',
-	vhost: {
-		protocol: '${protocol}',
-		domain: '${domain}',
-		port: '${port}',
-		pathname: '/'
-	},
-	target: "${target}",
-	morgan: {
-		format: 'tiny',
-		options: {}
-	}
-}
-`
+	let config = require('./lib/generate')(process);
 	process.stdout.write(config, null, 4);
 	process.exit(0);
 } catch (e) {

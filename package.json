@@ -5,17 +5,27 @@
   "main": "hardbox",
   "dependencies": {
     "assert": "^1.4.1",
-    "commander": "^2.11.0",
-    "request": "^2.81.0",
-    "validator": "^8.0.0"
+    "commander": "^2.19.0",
+    "request": "^2.88.0",
+    "validator": "^10.11.0"
   },
   "bin": {
     "hardbox": "./hardbox"
   },
   "preferGlobal": true,
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.4",
+    "eslint": "^5.16.0",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.1",
+    "require-from-string": "^2.0.2"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --recursive",
+    "lint": "node_modules/.bin/eslint --fix .",
+    "test-cov": "node_modules/.bin/nyc mocha --recursive",
+    "coveralls": "nyc mocha --recursive && nyc report --reporter=text-lcov | node_modules/.bin/coveralls"
   },
   "author": "",
   "license": "ISC"
